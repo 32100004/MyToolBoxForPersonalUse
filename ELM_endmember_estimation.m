@@ -4,7 +4,7 @@ function m=ELM_endmmeber_estimation(Y)
 % OutPut: m: Estimated Endmember Numbers
 % Reference:  Ben Ismail & Ouiem Bchir
 %             Survey on Number of Endmembers Estimation Techniques for Hyperspectral Data Unmixing
-
+% TO See if it is changed
 [L,N] = size(Y);
 
 % Compute the covariance matrix
