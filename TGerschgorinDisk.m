@@ -1,11 +1,28 @@
-function m = TGerschgorinDisk(Y)
+function m = TGerschgorinDisk(Y,choice)
+
+% Noise_adjusted TGD method does not test
+
+if nargin ==1
+    choice = 'Traditional'
+end
 
 % Compute Covariance Matrix
 [L,N]=size(Y);
 
-R = 1/N*bsxfun(@minus,Y,mean(Y))*transpose(bsxfun(@minus,Y,mean(Y)));
+%R = 1/N*bsxfun(@minus,Y,mean(Y))*transpose(bsxfun(@minus,Y,mean(Y)));
 
-% R=1/N*(Y*Y');%//TODO;
+switch choice 
+    case 'Traditional'
+        R=1/N*(Y*Y');
+    case 'Noise_adjusted'
+        [~,Rn]=estNoise(Y); % Function estNoise from Hysime
+        [V_Rn,D_Rn] = eig(Rn);
+        Wn=V_Rn*D_Rn^(-0.5);
+        R=1/N*(Y*Y');
+        R=Wn'*R*Wn;
+    otherwise
+        error('Methods Must be Traditional or Noise_adjusted!');
+end
 
 % Decomposition
 
